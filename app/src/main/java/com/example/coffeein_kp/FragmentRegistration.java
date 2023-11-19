@@ -33,8 +33,7 @@ public class FragmentRegistration extends Fragment {
         btn_auth.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                MainActivity.fragmentAuthorization = new FragmentAuthorization();
-
+                //MainActivity.fragmentAuthorization = new FragmentAuthorization();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
                 transaction.replace(MainActivity.host.getId(), MainActivity.fragmentAuthorization);
