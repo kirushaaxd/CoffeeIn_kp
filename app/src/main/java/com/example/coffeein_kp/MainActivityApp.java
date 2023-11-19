@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.util.ArrayList;
+
 public class MainActivityApp extends AppCompatActivity {
     NavigationBarView navigationBar;
     FrameLayout host;
@@ -81,6 +83,19 @@ public class MainActivityApp extends AppCompatActivity {
 
         });
 
+        loadDishes();
+
         navigation.setSelectedItemId(R.id.Home);
+    }
+
+    public void loadDishes(){
+        StaticResources.dishes = new ArrayList<>();
+        StaticResources.dishes.add("");
+        StaticResources.dishes.add("");
+        StaticResources.dishes.add("");
+        StaticResources.dishes.add("");
+        StaticResources.dishes.add("");
+        StaticResources.dishes.add("");
+
     }
 }
