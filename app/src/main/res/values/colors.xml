@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="green">#2E641A</color>
+    <color name="green_light">#CEF8BE</color>
+
+    <color name="app_background_color">#DAF4D6</color>
 </resources>
