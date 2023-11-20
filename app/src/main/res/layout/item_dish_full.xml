@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/green_lighter"
+    app:cardCornerRadius="15sp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/green_lighter">
+        <ImageView
+            android:id="@+id/dish_img"
+            android:scaleType="centerCrop"
+            android:src="@drawable/app_small"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10sp"
+            android:layout_width="180sp"
+            android:layout_height="180sp"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
+            android:layout_marginStart="15sp"
+            android:layout_marginEnd="15sp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/name"
+                android:text="Кофе"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_marginTop="15sp"
+                android:text="Описание"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/description"
+                android:textSize="19sp"
+                android:layout_marginTop="5sp"
+                android:text="Очень вкусный кофе из вкуснейших зерен с сердца Африки. Дарит тепло и уют, особенно в холодные зимние дни."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_marginTop="15sp"
+                android:text="Состав"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/compose"
+                android:text="Кофе, молоко"
+                android:textSize="19sp"
+                android:layout_marginTop="5sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_marginTop="15sp"
+                android:text="Калорийность"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/calories"
+                android:text="150 ccal"
+                android:textSize="19sp"
+                android:layout_marginTop="5sp"
+                android:layout_marginBottom="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
