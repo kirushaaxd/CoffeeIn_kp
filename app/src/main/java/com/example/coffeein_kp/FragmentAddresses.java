@@ -36,8 +36,8 @@ public class FragmentAddresses extends Fragment {
 
 
         ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add("Москва");
         arrayList.add("Санкт-Петербург");
+        arrayList.add("Москва");
         arrayList.add("Сочи");
 
         ArrayAdapter<String> adapter2 = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, arrayList);
