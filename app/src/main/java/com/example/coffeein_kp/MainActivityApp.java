@@ -107,5 +107,10 @@ public class MainActivityApp extends AppCompatActivity {
         StaticResources.coffeeHouses.add("");
         StaticResources.coffeeHouses.add("");
 
+        StaticResources.orders = new ArrayList<>();
+        StaticResources.orders.add("");
+        StaticResources.orders.add("");
+        StaticResources.orders.add("");
+        StaticResources.orders.add("");
     }
 }

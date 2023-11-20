@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
@@ -43,6 +45,24 @@ public class FragmentProfile extends Fragment {
                     }
                 });
                 dialog.show();
+            }
+        });
+
+        myOrders.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                BottomSheetDialog dialog = new BottomSheetDialog(getContext());
+                dialog.setContentView(R.layout.item_order_story_full);
+
+                RecyclerView recycler = dialog.findViewById(R.id.recycler);
+
+                AdapterOrderStory adapter = new AdapterOrderStory(StaticResources.orders);
+                recycler.setAdapter(adapter);
+                recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                dialog.show();
+
             }
         });
 

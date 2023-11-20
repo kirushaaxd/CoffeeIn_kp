@@ -12,9 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/green_lighter">
+        android:background="@color/green_lighter"
+        >
         <com.google.android.material.textview.MaterialTextView
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginStart="15sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,13 +28,13 @@
         <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/call"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="30sp"
-            android:layout_marginEnd="10sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="15sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+78002220000"
@@ -42,6 +43,8 @@
             android:textColor="@color/green_dark"
             android:autoLink="phone"
             android:clickable="true"
+            android:layout_marginBottom="60sp"
+
             />
     </LinearLayout>
 
