@@ -18,15 +18,14 @@
 
 
     <com.google.android.material.textview.MaterialTextView
-        android:layout_marginTop="10sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="CoffeeIN"
-        android:textSize="55dp"
-        android:textStyle="bold"
+        android:layout_marginTop="10sp"
+        android:text="CoffeIN"
         android:textColor="@color/green"
-        />
+        android:textSize="55dp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/linearLayout"

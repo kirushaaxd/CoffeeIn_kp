@@ -96,6 +96,16 @@ public class MainActivityApp extends AppCompatActivity {
         StaticResources.dishes.add("");
         StaticResources.dishes.add("");
         StaticResources.dishes.add("");
+        StaticResources.dishes.add("");
+
+        StaticResources.coffeeHouses = new ArrayList<>();
+        StaticResources.coffeeHouses.add("");
+        StaticResources.coffeeHouses.add("");
+        StaticResources.coffeeHouses.add("");
+        StaticResources.coffeeHouses.add("");
+        StaticResources.coffeeHouses.add("");
+        StaticResources.coffeeHouses.add("");
+        StaticResources.coffeeHouses.add("");
 
     }
 }

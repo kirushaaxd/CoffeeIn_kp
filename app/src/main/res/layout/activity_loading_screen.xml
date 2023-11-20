@@ -17,19 +17,22 @@
         android:layout_gravity="center"
         />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="CoffeeIN"
-        android:textSize="75dp"
+        android:text="CoffeIN"
+        android:textSize="80sp"
         android:textStyle="bold"
         android:textColor="@color/green"
         />
 
-    <TextView
-        android:layout_marginTop="210sp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -37,6 +40,7 @@
         android:textSize="25sp"
         android:textStyle="bold"
         android:textColor="@color/green"
+        android:layout_marginBottom="15sp"
         />
 
 </LinearLayout>
