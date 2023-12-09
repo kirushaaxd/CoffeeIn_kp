@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
     static FragmentAuthorization fragmentAuthorization;
     static FragmentRegistration fragmentRegistration;
     static FrameLayout host;
-    static MainActivityApp activityMainApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +25,10 @@ public class MainActivity extends AppCompatActivity {
 
         host = (FrameLayout) findViewById(R.id.host);
 
+        StaticResources.initialize();
+
         fragmentAuthorization = new FragmentAuthorization();
         fragmentRegistration = new FragmentRegistration();
-        //activityMainApp = new MainActivityApp();
 
         loadAuthFragment();
     }
