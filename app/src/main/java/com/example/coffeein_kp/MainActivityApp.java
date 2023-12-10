@@ -27,10 +27,11 @@ public class MainActivityApp extends AppCompatActivity {
     NavigationBarView navigationBar;
     FrameLayout host;
 
-     FragmentHome fragmentHome;
-     FragmentOrder fragmentOrder;
-     FragmentAddresses fragmentAddresses;
-     FragmentProfile fragmentProfile;
+     static FragmentHome fragmentHome;
+     static FragmentOrder fragmentOrder;
+     static FragmentAddresses fragmentAddresses;
+     static FragmentProfile fragmentProfile;
+
      NavigationBarView navigation;
 
     @Override
@@ -76,7 +77,6 @@ public class MainActivityApp extends AppCompatActivity {
                     return true;
                 }
                 if (item.getItemId() == R.id.Profile){
-                    //fragmentProfile = new FragmentProfile();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
                     transaction.replace(host.getId(), fragmentProfile);

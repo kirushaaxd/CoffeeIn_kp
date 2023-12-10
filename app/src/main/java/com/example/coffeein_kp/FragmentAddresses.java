@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -21,11 +23,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.BreakIterator;
 import java.util.ArrayList;
 
 public class FragmentAddresses extends Fragment {
     RecyclerView recycler;
     Spinner spinner;
+    static TextView openTime;
+    static TextView name;
+    static TextView location;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,6 +39,9 @@ public class FragmentAddresses extends Fragment {
 
         recycler = (RecyclerView) v.findViewById(R.id.recycler);
         spinner = (Spinner) v.findViewById(R.id.spinner);
+        openTime = (TextView) v.findViewById(R.id.openTimeA);
+        name = (TextView) v.findViewById(R.id.nameA);
+        location = (TextView) v.findViewById(R.id.locationA);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -47,7 +56,18 @@ public class FragmentAddresses extends Fragment {
             }
         });
 
-        LoadCities();
+        if (StaticResources.cities.size() == 0)
+            LoadCities();
+        else {
+            ArrayAdapter<String> adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, StaticResources.citiesNames);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter);
+            spinner.setSelection(0);
+
+            openTime.setText("Работает c " + StaticResources.selectedCoffeeHouse.getTimeOpen() + " до " + StaticResources.selectedCoffeeHouse.getTimeClose());
+            name.setText(StaticResources.selectedCoffeeHouse.getName());
+            location.setText(StaticResources.selectedCoffeeHouse.getAddress());
+        }
         return v;
     }
 
@@ -73,7 +93,8 @@ public class FragmentAddresses extends Fragment {
                                 city.setAdapter(adapter);
                             }
 
-                            spinner.setSelection(0);
+                            recycler.setAdapter(StaticResources.cities.get(0).getAdapter());
+                            recycler.setLayoutManager(new LinearLayoutManager(getContext()));
                         } else {
                             Log.i(TAG, "Error getting documents", task.getException());
                         }
@@ -89,14 +110,13 @@ public class FragmentAddresses extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            ArrayList<String> cities = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 CoffeeCity city = new CoffeeCity(document.getString("Город"), document.getString("Область"), document.getId());
                                 StaticResources.cities.add(city);
-                                cities.add(city.getCity());
+                                StaticResources.citiesNames.add(city.getCity());
                             }
 
-                            ArrayAdapter<String> adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, cities);
+                            ArrayAdapter<String> adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, StaticResources.citiesNames);
                             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             spinner.setAdapter(adapter);
 
@@ -106,5 +126,12 @@ public class FragmentAddresses extends Fragment {
                         }
                     }
                 });
+    }
+
+    public static void ChangeCoffeeHouse(String timeT, String nameT, String locationT){
+        // Изменение выбранного адреса для заказа
+        openTime.setText(timeT);
+        name.setText(nameT);
+        location.setText(locationT);
     }
 }

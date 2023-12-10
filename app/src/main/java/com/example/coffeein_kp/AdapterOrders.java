@@ -7,12 +7,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class AdapterOrders extends RecyclerView.Adapter<AdapterOrders.ViewHolder> {
@@ -37,9 +41,9 @@ public class AdapterOrders extends RecyclerView.Adapter<AdapterOrders.ViewHolder
         }
     }
 
-    private List<Object> orders;
+    private LinkedHashMap<Product, Integer> orders;
 
-    public AdapterOrders(List<Object> orders) {
+    public AdapterOrders(LinkedHashMap<Product, Integer> orders) {
         this.orders = orders;
     }
 
@@ -56,36 +60,48 @@ public class AdapterOrders extends RecyclerView.Adapter<AdapterOrders.ViewHolder
 
     @Override
     public void onBindViewHolder(AdapterOrders.ViewHolder holder, int position) {
-        Object dish = orders.get(position);
-
+        Product dish = (Product) orders.keySet().toArray()[position];
+        final int[] count = {orders.get(dish)};
 
         ImageView dish_img = (ImageView) holder.dish_img;
+        Picasso.with(holder.dish_img.getContext()).load(dish.getImage())
+                .error(R.drawable.app_small)
+                .placeholder(R.drawable.app_small)
+                .resize(250, 250)
+                .into(dish_img);
 
         TextView name = (TextView) holder.name;
+        name.setText(dish.getName());
 
         Button col_minus = (Button) holder.col_minus;
 
-        TextView price = (TextView) holder.price;
+        TextView countT = (TextView) holder.price;
+        countT.setText(count[0] + "");
 
         Button col_plus = (Button) holder.col_plus;
-
 
         col_minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int n = Integer.parseInt(price.getText().toString());
-                if (n > 1){
-                    price.setText((n - 1) + "");
+                if (count[0] > 1){
+                    countT.setText((--count[0]) + "");
+                    StaticResources.ordersList.put(dish, count[0]);
                 }
+                else{
+                    StaticResources.ordersList.remove(dish);
+                    Toast.makeText(countT.getContext(), "Товар удален из корзины", Toast.LENGTH_SHORT).show();
+                }
+                MainActivityApp.fragmentOrder.updateRecycler();
             }
         });
 
         col_plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int n = Integer.parseInt(price.getText().toString());
-                if (n < 10){
-                    price.setText((n + 1) + "");
+                if (count[0] < 10){
+                    countT.setText((++count[0]) + "");
+                    StaticResources.ordersList.put(dish, count[0]);
+                    MainActivityApp.fragmentOrder.updateRecycler();
                 }
             }
         });

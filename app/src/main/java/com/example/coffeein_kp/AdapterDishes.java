@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -73,6 +74,20 @@ public class AdapterDishes extends RecyclerView.Adapter<AdapterDishes.ViewHolder
 
         Button price_btn = (Button) holder.price_btn;
         price_btn.setText(String.valueOf(dish.getQuantity()));
+
+        price_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (StaticResources.ordersList.containsKey(dish)) {
+                    if (StaticResources.ordersList.get(dish) < 10)
+                        StaticResources.ordersList.put(dish, StaticResources.ordersList.get(dish) + 1);
+                }
+                else
+                    StaticResources.ordersList.put(dish, 1);
+                Toast.makeText(price_btn.getContext(), "Товар добавлен в корзину", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         CardView dish_card = (CardView) holder.dish_card;
         dish_card.setOnClickListener(new View.OnClickListener() {

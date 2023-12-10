@@ -29,9 +29,9 @@ public class AdapterOrdersStoryItem extends RecyclerView.Adapter<AdapterOrdersSt
         }
     }
 
-    private List<Object> order_story_items;
+    private List<Product> order_story_items;
 
-    public AdapterOrdersStoryItem(List<Object> order_story_items) {
+    public AdapterOrdersStoryItem(List<Product> order_story_items) {
         this.order_story_items = order_story_items;
     }
 
@@ -48,8 +48,7 @@ public class AdapterOrdersStoryItem extends RecyclerView.Adapter<AdapterOrdersSt
 
     @Override
     public void onBindViewHolder(AdapterOrdersStoryItem.ViewHolder holder, int position) {
-        Object dish = order_story_items.get(position);
-
+        Product dish = order_story_items.get(position);
 
         ImageView dish_img = (ImageView) holder.dish_img;
 

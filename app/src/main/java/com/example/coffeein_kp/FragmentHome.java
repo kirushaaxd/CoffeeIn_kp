@@ -45,13 +45,16 @@ public class FragmentHome extends Fragment {
                     recycler.setAdapter(StaticResources.dessertsAdapter);
                 }
                 recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-
             }
         });
 
-
         recycler = (RecyclerView) v.findViewById(R.id.recycler);
-        LoadProducts();
+        if (StaticResources.allProducts.size() == 0)
+            LoadProducts();
+        else{
+            recycler.setAdapter(StaticResources.allProductsAdapter);
+            recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
 
         return v;
     }

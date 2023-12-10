@@ -33,9 +33,9 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     }
 }
 
-    private List<Object> order_story;
+    private List<Product> order_story;
 
-    public AdapterOrderStory(List<Object> order_story) {
+    public AdapterOrderStory(List<Product> order_story) {
         this.order_story = order_story;
     }
 

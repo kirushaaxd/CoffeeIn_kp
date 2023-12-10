@@ -6,6 +6,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class StaticResources {
     // Данные обо всем ассортименте + категории
@@ -22,13 +24,19 @@ public class StaticResources {
 
     // Данные о городах и кофейнях в них
     static ArrayList<CoffeeCity> cities;
+    static ArrayList<String> citiesNames;
 
-    static ArrayList<Object> orders;
+    // Данные об оформляемом заказе (корзина)
+    static ArrayList<Product> orders;
+    static LinkedHashMap<Product, Integer> ordersList;
+    static AdapterOrders ordersAdapter;
 
+    // Универсальный FragmentManager
     static FragmentManager fragmentManager;
 
     // Информация о авторизованном пользователе
     static Client currentClient;
+    static CoffeeHouse selectedCoffeeHouse;
 
 
     // Работа с Firebase
@@ -44,7 +52,11 @@ public class StaticResources {
         drinksProducts = new ArrayList<>();
         dessertsProducts = new ArrayList<>();
 
+        orders = new ArrayList<>();
+        ordersList = new LinkedHashMap<>();
+
         cities = new ArrayList<>();
+        citiesNames = new ArrayList<>();
 
     }
 

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -62,6 +63,15 @@ public class AdapterCoffeeHouse extends RecyclerView.Adapter<AdapterCoffeeHouse.
 
         TextView location = (TextView) holder.location;
         location.setText(coffeeHouse.getAddress());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StaticResources.selectedCoffeeHouse = coffeeHouse;
+                FragmentAddresses.ChangeCoffeeHouse("Работает c " + coffeeHouse.getTimeOpen() + " до " + coffeeHouse.getTimeClose(), coffeeHouse.getName(), coffeeHouse.getAddress());
+                Toast.makeText(holder.itemView.getContext(), "Адрес заказа изменен", Toast.LENGTH_SHORT);
+            }
+        });
     }
 
     @Override
