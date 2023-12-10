@@ -1,5 +1,7 @@
 package com.example.coffeein_kp;
 
+import androidx.fragment.app.FragmentManager;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -22,8 +24,14 @@ public class StaticResources {
     static ArrayList<CoffeeCity> cities;
 
     static ArrayList<Object> orders;
+
+    static FragmentManager fragmentManager;
+
+    // Информация о авторизованном пользователе
     static Client currentClient;
 
+
+    // Работа с Firebase
     static FirebaseFirestore fBase;
     static FirebaseAuth mAuth;
 
@@ -37,6 +45,7 @@ public class StaticResources {
         dessertsProducts = new ArrayList<>();
 
         cities = new ArrayList<>();
+
     }
 
 }

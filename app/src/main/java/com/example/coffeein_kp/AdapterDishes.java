@@ -11,10 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -76,9 +78,9 @@ public class AdapterDishes extends RecyclerView.Adapter<AdapterDishes.ViewHolder
         dish_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BottomSheetDialog dialog = new BottomSheetDialog(holder.dish_card.getContext());
-                dialog.setContentView(R.layout.item_dish_full);
-                dialog.show();
+                FragmentDishInfo dishFragment = new FragmentDishInfo();
+                dishFragment.TransferData(dish);
+                dishFragment.show(StaticResources.fragmentManager, "");
             }
         });
     }

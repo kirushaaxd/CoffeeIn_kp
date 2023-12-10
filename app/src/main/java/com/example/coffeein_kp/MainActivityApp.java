@@ -45,6 +45,8 @@ public class MainActivityApp extends AppCompatActivity {
         fragmentAddresses = new FragmentAddresses();
         fragmentProfile = new FragmentProfile();
 
+        StaticResources.fragmentManager = getSupportFragmentManager();
+
         navigation = (NavigationBarView) findViewById(R.id.navigation);
         navigation.setOnItemSelectedListener(new com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener() {
             @Override
