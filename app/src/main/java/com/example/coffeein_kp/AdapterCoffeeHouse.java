@@ -4,21 +4,17 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.List;
 
 public class AdapterCoffeeHouse extends RecyclerView.Adapter<AdapterCoffeeHouse.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView coffee_house_img;
-        public TextView open_time;
+        public ImageView coffeeHouseImg;
+        public TextView openTime;
         public TextView name;
         public TextView location;
 
@@ -27,17 +23,17 @@ public class AdapterCoffeeHouse extends RecyclerView.Adapter<AdapterCoffeeHouse.
         public ViewHolder(View itemView) {
             super(itemView);
 
-            coffee_house_img = (ImageView) itemView.findViewById(R.id.coffee_house_img);
-            open_time = (TextView) itemView.findViewById(R.id.open_time);
+            coffeeHouseImg = (ImageView) itemView.findViewById(R.id.coffee_house_img);
+            openTime = (TextView) itemView.findViewById(R.id.open_time);
             name = (TextView) itemView.findViewById(R.id.name);
             location = (TextView) itemView.findViewById(R.id.location);
 
         }
     }
 
-    private List<Object> coffeeHouses;
+    private List<CoffeeHouse> coffeeHouses;
 
-    public AdapterCoffeeHouse(List<Object> coffeeHouses) {
+    public AdapterCoffeeHouse(List<CoffeeHouse> coffeeHouses) {
         this.coffeeHouses = coffeeHouses;
     }
 
@@ -54,16 +50,18 @@ public class AdapterCoffeeHouse extends RecyclerView.Adapter<AdapterCoffeeHouse.
 
     @Override
     public void onBindViewHolder(AdapterCoffeeHouse.ViewHolder holder, int position) {
-        Object coffee_house = coffeeHouses.get(position);
+        CoffeeHouse coffeeHouse = coffeeHouses.get(position);
 
-        ImageView coffee_house_img = (ImageView) holder.coffee_house_img;
+        ImageView coffeeHouseImg = (ImageView) holder.coffeeHouseImg;
 
-        TextView open_time = (TextView) holder.open_time;
+        TextView openTime = (TextView) holder.openTime;
+        openTime.setText("Работает c " + coffeeHouse.getTimeOpen() + " до " + coffeeHouse.getTimeClose());
 
         TextView name = (TextView) holder.name;
+        name.setText(coffeeHouse.getName());
 
         TextView location = (TextView) holder.location;
-
+        location.setText(coffeeHouse.getAddress());
     }
 
     @Override

@@ -1,19 +1,25 @@
 package com.example.coffeein_kp;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -28,23 +34,77 @@ public class FragmentAddresses extends Fragment {
         recycler = (RecyclerView) v.findViewById(R.id.recycler);
         spinner = (Spinner) v.findViewById(R.id.spinner);
 
-        AdapterCoffeeHouse adapter = new AdapterCoffeeHouse(StaticResources.coffeeHouses);
-        recycler.setAdapter(adapter);
-        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                recycler.setAdapter(StaticResources.cities.get(position).getAdapter());
+                recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
 
-
-        ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add("Санкт-Петербург");
-        arrayList.add("Москва");
-        arrayList.add("Сочи");
-
-        ArrayAdapter<String> adapter2 = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, arrayList);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter2);
-        spinner.setSelection(0);
-
+        LoadCities();
         return v;
+    }
+
+    public void LoadCafes() {
+        // Загрузка всех кофеен в каждом городе
+        StaticResources.fBase.collection("Кофейни")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                CoffeeHouse coffeeHouse = new CoffeeHouse(document.getString("Название"), document.getString("Адрес"),
+                                        document.getDocumentReference("Город").getId(), document.getString("Время открытия"),
+                                        document.getString("Время закрытия"), document.getId());
+
+                                for (CoffeeCity city : StaticResources.cities)
+                                    if (city.getDocId().equals(document.getDocumentReference("Город").getId()))
+                                        city.AddCoffeeHouse(coffeeHouse);
+                            }
+                            for (CoffeeCity city : StaticResources.cities){
+                                AdapterCoffeeHouse adapter = new AdapterCoffeeHouse(city.getCoffeeShops());
+                                city.setAdapter(adapter);
+                            }
+
+                            spinner.setSelection(0);
+                        } else {
+                            Log.i(TAG, "Error getting documents", task.getException());
+                        }
+                    }
+                });
+    }
+
+    public void LoadCities() {
+        // Загрузка всех городов
+        StaticResources.fBase.collection("Города")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            ArrayList<String> cities = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                CoffeeCity city = new CoffeeCity(document.getString("Город"), document.getString("Область"), document.getId());
+                                StaticResources.cities.add(city);
+                                cities.add(city.getCity());
+                            }
+
+                            ArrayAdapter<String> adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, cities);
+                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spinner.setAdapter(adapter);
+
+                            LoadCafes();
+                        } else {
+                            Log.i(TAG, "Error getting documents", task.getException());
+                        }
+                    }
+                });
     }
 }

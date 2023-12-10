@@ -2,35 +2,23 @@ package com.example.coffeein_kp;
 
 import static android.content.ContentValues.TAG;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class FragmentHome extends Fragment {
     TabLayout tab_layout;
@@ -88,11 +76,11 @@ public class FragmentHome extends Fragment {
                                 if (document.getString("Категория").equals("Десерты"))
                                     StaticResources.dessertsProducts.add(product);
                             }
-                            StaticResources.products.addAll(StaticResources.promoProducts);
-                            StaticResources.products.addAll(StaticResources.drinksProducts);
-                            StaticResources.products.addAll(StaticResources.dessertsProducts);
+                            StaticResources.allProducts.addAll(StaticResources.promoProducts);
+                            StaticResources.allProducts.addAll(StaticResources.drinksProducts);
+                            StaticResources.allProducts.addAll(StaticResources.dessertsProducts);
 
-                            StaticResources.allProductsAdapter = new AdapterDishes(StaticResources.products);
+                            StaticResources.allProductsAdapter = new AdapterDishes(StaticResources.allProducts);
                             StaticResources.promoAdapter = new AdapterDishes(StaticResources.promoProducts);
                             StaticResources.drinksAdapter = new AdapterDishes(StaticResources.drinksProducts);
                             StaticResources.dessertsAdapter = new AdapterDishes(StaticResources.dessertsProducts);
