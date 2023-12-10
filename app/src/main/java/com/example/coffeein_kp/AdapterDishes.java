@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +38,9 @@ public class AdapterDishes extends RecyclerView.Adapter<AdapterDishes.ViewHolder
         }
     }
 
-    private List<Object> dishes;
+    private List<Product> dishes;
 
-    public AdapterDishes(List<Object> dishes) {
+    public AdapterDishes(List<Product> dishes) {
         this.dishes = dishes;
     }
 
@@ -56,17 +57,23 @@ public class AdapterDishes extends RecyclerView.Adapter<AdapterDishes.ViewHolder
 
     @Override
     public void onBindViewHolder(AdapterDishes.ViewHolder holder, int position) {
-        Object dish = dishes.get(position);
+        Product dish = dishes.get(position);
 
         ImageView dish_img = (ImageView) holder.dish_img;
+        Picasso.with(holder.dish_img.getContext()).load(dish.getImage())
+                .error(R.drawable.app_small)
+                .placeholder(R.drawable.app_small)
+                .resize(250, 250)
+                .into(dish_img);
 
         TextView dish_name = (TextView) holder.name;
+        dish_name.setText(dish.getName());
 
         Button price_btn = (Button) holder.price_btn;
+        price_btn.setText(String.valueOf(dish.getQuantity()));
 
         CardView dish_card = (CardView) holder.dish_card;
         dish_card.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 BottomSheetDialog dialog = new BottomSheetDialog(holder.dish_card.getContext());

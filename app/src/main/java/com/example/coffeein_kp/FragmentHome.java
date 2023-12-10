@@ -1,7 +1,10 @@
 package com.example.coffeein_kp;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,15 +12,25 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FragmentHome extends Fragment {
     TabLayout tab_layout;
@@ -27,12 +40,70 @@ public class FragmentHome extends Fragment {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
         tab_layout = (TabLayout) v.findViewById(R.id.tab_layout);
-        recycler = (RecyclerView) v.findViewById(R.id.recycler);
 
-        AdapterDishes adapter = new AdapterDishes(StaticResources.dishes);
-        recycler.setAdapter(adapter);
-        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        tab_layout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(new ViewPager(getContext())){
+            @Override
+            public void onTabSelected(TabLayout.Tab tab){
+                if (tab.getText().equals("Все товары")){
+                    recycler.setAdapter(StaticResources.allProductsAdapter);
+                }
+                else if (tab.getText().equals("Акции")){
+                    recycler.setAdapter(StaticResources.promoAdapter);
+                }
+                else if (tab.getText().equals("Напитки")){
+                    recycler.setAdapter(StaticResources.drinksAdapter);
+                }
+                else if (tab.getText().equals("Десерты")){
+                    recycler.setAdapter(StaticResources.dessertsAdapter);
+                }
+                recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+
+            }
+        });
+
+
+        recycler = (RecyclerView) v.findViewById(R.id.recycler);
+        LoadProducts();
 
         return v;
+    }
+
+    public void LoadProducts(){
+        // Загрузка списка всех товаров
+        StaticResources.fBase.collection("Товары")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Product product = new Product(document.getString("Название"), document.getString("Описание"),
+                                        document.getLong("Стоимость").intValue(), document.getString("Калорийность"),
+                                        document.getString("Изображение"), document.getString("Состав"),
+                                        document.getString("Категория"), document.getId());
+                                if (document.getString("Категория").equals("Акции"))
+                                    StaticResources.promoProducts.add(product);
+                                if (document.getString("Категория").equals("Напитки"))
+                                    StaticResources.drinksProducts.add(product);
+                                if (document.getString("Категория").equals("Десерты"))
+                                    StaticResources.dessertsProducts.add(product);
+                            }
+                            StaticResources.products.addAll(StaticResources.promoProducts);
+                            StaticResources.products.addAll(StaticResources.drinksProducts);
+                            StaticResources.products.addAll(StaticResources.dessertsProducts);
+
+                            StaticResources.allProductsAdapter = new AdapterDishes(StaticResources.products);
+                            StaticResources.promoAdapter = new AdapterDishes(StaticResources.promoProducts);
+                            StaticResources.drinksAdapter = new AdapterDishes(StaticResources.drinksProducts);
+                            StaticResources.dessertsAdapter = new AdapterDishes(StaticResources.dessertsProducts);
+
+                            recycler.setAdapter(StaticResources.allProductsAdapter);
+                            recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+                        }
+                        else {
+                            Log.i(TAG, "Error getting documents", task.getException());
+                        }
+                    }
+                });
     }
 }

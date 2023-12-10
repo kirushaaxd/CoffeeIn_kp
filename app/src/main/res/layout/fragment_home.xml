@@ -65,21 +65,25 @@
         android:background="@color/green_lighter"
         >
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/allProducts"
             android:text="Все товары"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/promoProducts"
             android:text="Акции"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/drinksProducts"
             android:text="Напитки"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/dessertProducts"
             android:text="Десерты"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

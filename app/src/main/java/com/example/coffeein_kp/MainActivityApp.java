@@ -1,18 +1,25 @@
 package com.example.coffeein_kp;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -43,7 +50,6 @@ public class MainActivityApp extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.Home){
-                    ///fragmentHome = new FragmentHome();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
                     transaction.replace(host.getId(), fragmentHome);
@@ -52,7 +58,6 @@ public class MainActivityApp extends AppCompatActivity {
                     return true;
                 }
                 if (item.getItemId() == R.id.Order){
-                    //fragmentOrder = new FragmentOrder();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
                     transaction.replace(host.getId(), fragmentOrder);
@@ -61,7 +66,6 @@ public class MainActivityApp extends AppCompatActivity {
                     return true;
                 }
                 if (item.getItemId() == R.id.Address){
-                    //fragmentAddresses = new FragmentAddresses();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
                     transaction.replace(host.getId(), fragmentAddresses);
@@ -83,34 +87,6 @@ public class MainActivityApp extends AppCompatActivity {
 
         });
 
-        loadDishes();
-
         navigation.setSelectedItemId(R.id.Home);
-    }
-
-    public void loadDishes(){
-        StaticResources.dishes = new ArrayList<>();
-        StaticResources.dishes.add("");
-        StaticResources.dishes.add("");
-        StaticResources.dishes.add("");
-        StaticResources.dishes.add("");
-        StaticResources.dishes.add("");
-        StaticResources.dishes.add("");
-        StaticResources.dishes.add("");
-
-        StaticResources.coffeeHouses = new ArrayList<>();
-        StaticResources.coffeeHouses.add("");
-        StaticResources.coffeeHouses.add("");
-        StaticResources.coffeeHouses.add("");
-        StaticResources.coffeeHouses.add("");
-        StaticResources.coffeeHouses.add("");
-        StaticResources.coffeeHouses.add("");
-        StaticResources.coffeeHouses.add("");
-
-        StaticResources.orders = new ArrayList<>();
-        StaticResources.orders.add("");
-        StaticResources.orders.add("");
-        StaticResources.orders.add("");
-        StaticResources.orders.add("");
     }
 }

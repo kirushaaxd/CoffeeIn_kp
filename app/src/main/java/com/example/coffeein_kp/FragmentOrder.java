@@ -18,7 +18,7 @@ public class FragmentOrder extends Fragment {
 
         recycler = (RecyclerView) v.findViewById(R.id.recycler);
 
-        AdapterOrders adapter = new AdapterOrders(StaticResources.dishes);
+        AdapterOrders adapter = new AdapterOrders(StaticResources.orders);
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
