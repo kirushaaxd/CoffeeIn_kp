@@ -26,10 +26,11 @@ public class StaticResources {
     static ArrayList<CoffeeCity> cities;
     static ArrayList<String> citiesNames;
 
-    // Данные об оформляемом заказе (корзина)
+    // Данные о заказах (корзина и предыдущие заказы)
     static ArrayList<Product> orders;
     static LinkedHashMap<Product, Integer> ordersList;
-    static AdapterOrders ordersAdapter;
+    static ArrayList<Order> ordersStory;
+    static FragmentOrderStory orderStory;
 
     // Универсальный FragmentManager
     static FragmentManager fragmentManager;
@@ -37,6 +38,7 @@ public class StaticResources {
     // Информация о авторизованном пользователе
     static Client currentClient;
     static CoffeeHouse selectedCoffeeHouse;
+    static ClientOrders clientOrders;
 
 
     // Работа с Firebase
@@ -54,10 +56,10 @@ public class StaticResources {
 
         orders = new ArrayList<>();
         ordersList = new LinkedHashMap<>();
+        ordersStory = new ArrayList<>();
 
         cities = new ArrayList<>();
         citiesNames = new ArrayList<>();
-
     }
 
 }

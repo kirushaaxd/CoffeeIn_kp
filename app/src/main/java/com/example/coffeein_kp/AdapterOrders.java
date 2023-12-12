@@ -9,15 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.squareup.picasso.Picasso;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 public class AdapterOrders extends RecyclerView.Adapter<AdapterOrders.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -91,7 +87,7 @@ public class AdapterOrders extends RecyclerView.Adapter<AdapterOrders.ViewHolder
                     StaticResources.ordersList.remove(dish);
                     Toast.makeText(countT.getContext(), "Товар удален из корзины", Toast.LENGTH_SHORT).show();
                 }
-                MainActivityApp.fragmentOrder.updateRecycler();
+                MainActivityApp.fragmentOrder.updateOrderInfo();
             }
         });
 
@@ -101,7 +97,7 @@ public class AdapterOrders extends RecyclerView.Adapter<AdapterOrders.ViewHolder
                 if (count[0] < 10){
                     countT.setText((++count[0]) + "");
                     StaticResources.ordersList.put(dish, count[0]);
-                    MainActivityApp.fragmentOrder.updateRecycler();
+                    MainActivityApp.fragmentOrder.updateOrderInfo();
                 }
             }
         });

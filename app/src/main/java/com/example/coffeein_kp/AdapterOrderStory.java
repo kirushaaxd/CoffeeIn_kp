@@ -33,9 +33,9 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     }
 }
 
-    private List<Product> order_story;
+    private List<Order> order_story;
 
-    public AdapterOrderStory(List<Product> order_story) {
+    public AdapterOrderStory(List<Order> order_story) {
         this.order_story = order_story;
     }
 
@@ -52,19 +52,27 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
     @Override
     public void onBindViewHolder(AdapterOrderStory.ViewHolder holder, int position) {
-        Object dish = order_story.get(position);
-
+        Order order = order_story.get(position);
 
         TextView orderTime = (TextView) holder.orderTime;
+        orderTime.setText(order.getOrderDate() + ", " + order.getOrderTime());
 
         TextView finalPrice = (TextView) holder.finalPrice;
+        finalPrice.setText(order.getFinalQuantity() + " руб.");
 
         Button reorder = (Button) holder.reorder;
+        reorder.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
 
         RecyclerView recycler = (RecyclerView) holder.recycler;
 
-
-        AdapterOrdersStoryItem adapter = new AdapterOrdersStoryItem(StaticResources.orders);
+        AdapterOrdersStoryItem adapter = new AdapterOrdersStoryItem(order.getProducts());
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new LinearLayoutManager(recycler.getContext()));
 

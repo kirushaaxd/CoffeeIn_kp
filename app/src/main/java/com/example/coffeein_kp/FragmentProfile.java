@@ -49,20 +49,11 @@ public class FragmentProfile extends Fragment {
         });
 
         myOrders.setOnClickListener(new View.OnClickListener(){
-
             @Override
             public void onClick(View v) {
-                BottomSheetDialog dialog = new BottomSheetDialog(getContext());
-                dialog.setContentView(R.layout.item_order_story_full);
-
-                RecyclerView recycler = dialog.findViewById(R.id.recycler);
-
-                AdapterOrderStory adapter = new AdapterOrderStory(StaticResources.orders);
-                recycler.setAdapter(adapter);
-                recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-
-                dialog.show();
-
+                if (StaticResources.orderStory == null)
+                    StaticResources.orderStory = new FragmentOrderStory();
+                StaticResources.orderStory.show(StaticResources.fragmentManager, "orderStory");
             }
         });
 

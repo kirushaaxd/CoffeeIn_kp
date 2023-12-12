@@ -118,7 +118,7 @@
         android:layout_marginTop="20sp"
         android:layout_gravity="center"
         android:text="Зарегистрироваться"
-        android:layout_width="wrap_content"
+        android:layout_width="290sp"
         android:layout_height="70sp"
         android:textSize="19sp"
         android:backgroundTint="@color/green"
@@ -127,7 +127,7 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_auth"
         style="@style/NavigationButton"
-        android:layout_width="wrap_content"
+        android:layout_width="200sp"
         android:layout_height="70sp"
         android:layout_gravity="center"
         android:layout_marginTop="10sp"

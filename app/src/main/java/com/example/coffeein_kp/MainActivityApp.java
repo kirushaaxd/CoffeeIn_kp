@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -18,10 +19,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class MainActivityApp extends AppCompatActivity {
     NavigationBarView navigationBar;
@@ -90,5 +95,62 @@ public class MainActivityApp extends AppCompatActivity {
         });
 
         navigation.setSelectedItemId(R.id.Home);
+    }
+
+    static public void LoadClientsOrders(){
+        // Загрузка списка всех заказов авторизованного клиента
+        StaticResources.fBase.collection("Заказы клиентов")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if (document.getDocumentReference("Клиент").getId().equals(StaticResources.currentClient.getDocId())){
+                                    StaticResources.clientOrders = new ClientOrders(StaticResources.currentClient.getDocId());
+                                    ArrayList<DocumentReference> orders = (ArrayList<DocumentReference>) document.get("Заказы");
+                                    for (DocumentReference order : orders){
+                                        String orderId = order.getId();
+                                        StaticResources.clientOrders.addOrder(orderId);
+                                    }
+                                    LoadClientsOrdersInfo();
+                                    break;
+                                }
+                            }
+                        }
+                        else {
+                            Log.i(TAG, "Error getting documents", task.getException());
+                        }
+                    }
+                });
+    }
+
+    static public void LoadClientsOrdersInfo(){
+        // Загрузка информации по каждому заказу авторизованного клиента
+        StaticResources.fBase.collection("Заказы")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if (StaticResources.clientOrders.getOrdersId().contains(document.getId())){
+                                    Order order = new Order(document.getDocumentReference("Адрес кофейни").getId(),
+                                            document.getString("Время заказа"), document.getString("Дата заказа"),
+                                            document.getLong("Итоговая стоимость").intValue());
+                                    List<HashMap<String, Object>> orderProducts = (List<HashMap<String, Object>>) document.get("Товары в заказе");
+                                    for (HashMap<String, Object> orderProduct : orderProducts)
+                                        for (Product product : StaticResources.allProducts)
+                                            if (product.getDocumentID().equals(((DocumentReference) orderProduct.get("Название товара")).getId()))
+                                                order.addProduct(new OrderProduct(((Long) orderProduct.get("Кол-во товара")).intValue(), product, ((Long) orderProduct.get("Стоимость позиций")).intValue()));
+                                    StaticResources.ordersStory.add(order);
+                                }
+                            }
+                        }
+                        else {
+                            Log.i(TAG, "Error getting documents", task.getException());
+                        }
+                    }
+                });
     }
 }

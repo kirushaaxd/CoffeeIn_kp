@@ -95,7 +95,7 @@ public class AdapterDishes extends RecyclerView.Adapter<AdapterDishes.ViewHolder
             public void onClick(View v) {
                 FragmentDishInfo dishFragment = new FragmentDishInfo();
                 dishFragment.TransferData(dish);
-                dishFragment.show(StaticResources.fragmentManager, "");
+                dishFragment.show(StaticResources.fragmentManager, "dishInfo");
             }
         });
     }

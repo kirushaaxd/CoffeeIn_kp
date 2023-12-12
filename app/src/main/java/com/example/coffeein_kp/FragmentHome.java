@@ -90,6 +90,8 @@ public class FragmentHome extends Fragment {
 
                             recycler.setAdapter(StaticResources.allProductsAdapter);
                             recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                            MainActivityApp.LoadClientsOrders();
                         }
                         else {
                             Log.i(TAG, "Error getting documents", task.getException());

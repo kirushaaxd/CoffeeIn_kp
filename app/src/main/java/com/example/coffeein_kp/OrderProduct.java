@@ -2,10 +2,10 @@ package com.example.coffeein_kp;
 
 public class OrderProduct {
     private int Count;
-    private String Product;
+    private Product Product;
     private int Price;
 
-    public OrderProduct (int Count, String Product, int Price) {
+    public OrderProduct (int Count, Product Product, int Price) {
         this.Count = Count;
         this.Product = Product;
         this.Price = Price;
@@ -19,11 +19,11 @@ public class OrderProduct {
         Count = count;
     }
 
-    public String getProduct() {
+    public Product getProduct() {
         return Product;
     }
 
-    public void setProduct(String product) {
+    public void setProduct(Product product) {
         Product = product;
     }
 

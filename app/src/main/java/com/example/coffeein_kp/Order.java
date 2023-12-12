@@ -11,6 +11,14 @@ public class Order {
 
     public Order() {}
 
+    public Order(String Address, String OrderTime, String OrderDate, int FinalQuantity) {
+        this.Address = Address;
+        this.OrderTime = OrderTime;
+        this.OrderDate = OrderDate;
+        this.FinalQuantity = FinalQuantity;
+        this.Products = new ArrayList<>();
+    }
+
     public Order(String Address, String OrderTime, String OrderDate, int FinalQuantity, ArrayList<OrderProduct> Products) {
         this.Address = Address;
         this.OrderTime = OrderTime;
@@ -57,5 +65,8 @@ public class Order {
 
     public void setProducts(ArrayList<OrderProduct> products) {
         Products = products;
+    }
+    public void addProduct(OrderProduct product) {
+        Products.add(product);
     }
 }

@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class AdapterOrdersStoryItem extends RecyclerView.Adapter<AdapterOrdersStoryItem.ViewHolder> {
@@ -29,9 +31,9 @@ public class AdapterOrdersStoryItem extends RecyclerView.Adapter<AdapterOrdersSt
         }
     }
 
-    private List<Product> order_story_items;
+    private List<OrderProduct> order_story_items;
 
-    public AdapterOrdersStoryItem(List<Product> order_story_items) {
+    public AdapterOrdersStoryItem(List<OrderProduct> order_story_items) {
         this.order_story_items = order_story_items;
     }
 
@@ -48,13 +50,21 @@ public class AdapterOrdersStoryItem extends RecyclerView.Adapter<AdapterOrdersSt
 
     @Override
     public void onBindViewHolder(AdapterOrdersStoryItem.ViewHolder holder, int position) {
-        Product dish = order_story_items.get(position);
+        OrderProduct dish = order_story_items.get(position);
 
         ImageView dish_img = (ImageView) holder.dish_img;
+        Picasso.with(dish_img.getContext()).load(dish.getProduct().getImage())
+                .error(R.drawable.app_small)
+                .placeholder(R.drawable.app_small)
+                .resize(250, 250)
+                .into(dish_img);
+
 
         TextView name = (TextView) holder.name;
+        name.setText(dish.getProduct().getName());
 
         TextView price = (TextView) holder.price;
+        price.setText(dish.getCount() + " x " + dish.getPrice());
 
     }
 
