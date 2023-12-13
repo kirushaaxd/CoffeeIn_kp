@@ -21,6 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -37,7 +38,7 @@ public class MainActivityApp extends AppCompatActivity {
      static FragmentAddresses fragmentAddresses;
      static FragmentProfile fragmentProfile;
 
-     NavigationBarView navigation;
+     static NavigationBarView navigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +108,7 @@ public class MainActivityApp extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (document.getDocumentReference("Клиент").getId().equals(StaticResources.currentClient.getDocId())){
+                                    StaticResources.clientOrdersDocumentReference = document.getReference();
                                     StaticResources.clientOrders = new ClientOrders(StaticResources.currentClient.getDocId());
                                     ArrayList<DocumentReference> orders = (ArrayList<DocumentReference>) document.get("Заказы");
                                     for (DocumentReference order : orders){
@@ -128,11 +130,13 @@ public class MainActivityApp extends AppCompatActivity {
     static public void LoadClientsOrdersInfo(){
         // Загрузка информации по каждому заказу авторизованного клиента
         StaticResources.fBase.collection("Заказы")
+                .orderBy("Дата заказа", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            StaticResources.ordersStory = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (StaticResources.clientOrders.getOrdersId().contains(document.getId())){
                                     Order order = new Order(document.getDocumentReference("Адрес кофейни").getId(),

@@ -93,6 +93,7 @@ public class FragmentAddresses extends Fragment {
                                 city.setAdapter(adapter);
                             }
 
+                            StaticResources.selectedCoffeeHouse = StaticResources.cities.get(0).getCoffeeShops().get(0);
                             recycler.setAdapter(StaticResources.cities.get(0).getAdapter());
                             recycler.setLayoutManager(new LinearLayoutManager(getContext()));
                         } else {

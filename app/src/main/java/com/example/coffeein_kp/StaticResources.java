@@ -3,6 +3,7 @@ package com.example.coffeein_kp;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -37,8 +38,10 @@ public class StaticResources {
 
     // Информация о авторизованном пользователе
     static Client currentClient;
+    static DocumentReference currentClientDocumentReference;
     static CoffeeHouse selectedCoffeeHouse;
     static ClientOrders clientOrders;
+    static DocumentReference clientOrdersDocumentReference;
 
 
     // Работа с Firebase

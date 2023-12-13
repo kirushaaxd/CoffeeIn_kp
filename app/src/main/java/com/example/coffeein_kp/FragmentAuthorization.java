@@ -100,6 +100,7 @@ public class FragmentAuthorization extends Fragment {
                                             document.getString("Почта"));
 
                                     StaticResources.currentClient.setDocId(document.getId());
+                                    StaticResources.currentClientDocumentReference = document.getReference();
                                     success = true;
                                     break;
                                 }
@@ -113,7 +114,7 @@ public class FragmentAuthorization extends Fragment {
                             }
                         }
                         else {
-                            Toast.makeText(getContext(), "Пользоватеь не найден", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Пользователь не найден", Toast.LENGTH_SHORT).show();
                             Log.i(TAG, "Error getting documents.", task.getException());
                         }
                     }
@@ -124,6 +125,4 @@ public class FragmentAuthorization extends Fragment {
         // Проверка на то, что все текстовые поля заполнены
         return (!mail.getText().toString().isEmpty() && !password.getText().toString().isEmpty());
     }
-
-
 }

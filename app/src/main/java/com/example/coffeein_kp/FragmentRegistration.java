@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.firestore.DocumentReference;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -120,9 +121,10 @@ public class FragmentRegistration extends Fragment {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
 
                         StaticResources.currentClient.setDocId(documentReference.getId());
+                        StaticResources.currentClientDocumentReference = documentReference;
 
-                        Intent intent = new Intent(getContext(), MainActivityApp.class);
-                        startActivity(intent);
+                        createUserOrdersStory(documentReference);
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -133,5 +135,32 @@ public class FragmentRegistration extends Fragment {
                 });
     }
 
+    public void createUserOrdersStory(DocumentReference documentReference1){
+        // Создание коллекции со всеми заказами нового клиента
+        Map<String, Object> userOrderStory = new HashMap<>();
+        userOrderStory.put("Клиент", documentReference1);
+        userOrderStory.put("Заказы", new ArrayList<>());
+
+        StaticResources.fBase.collection("Заказы клиентов")
+                .add(userOrderStory)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+
+                        StaticResources.clientOrdersDocumentReference = documentReference;
+
+                        Intent intent = new Intent(getContext(), MainActivityApp.class);
+                        startActivity(intent);
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Ошибка регистрации. Почта уже зарегистрирована", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
 
 }
