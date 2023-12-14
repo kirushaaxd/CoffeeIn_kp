@@ -73,7 +73,7 @@ public class AdapterDishes extends RecyclerView.Adapter<AdapterDishes.ViewHolder
         dish_name.setText(dish.getName());
 
         Button price_btn = (Button) holder.price_btn;
-        price_btn.setText(String.valueOf(dish.getQuantity()));
+        price_btn.setText(String.valueOf(dish.getQuantity()) + " ₽");
 
         price_btn.setOnClickListener(new View.OnClickListener() {
             @Override

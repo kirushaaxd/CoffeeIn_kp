@@ -74,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:textSize="19sp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/green" />
+                android:textColor="@color/green_dark" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton

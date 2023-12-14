@@ -64,7 +64,7 @@ public class AdapterOrdersStoryItem extends RecyclerView.Adapter<AdapterOrdersSt
         name.setText(dish.getProduct().getName());
 
         TextView price = (TextView) holder.price;
-        price.setText(dish.getCount() + " x " + dish.getPrice());
+        price.setText(dish.getCount() + " x " + dish.getPrice() + " ₽");
 
     }
 

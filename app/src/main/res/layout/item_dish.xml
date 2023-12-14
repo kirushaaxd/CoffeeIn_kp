@@ -54,7 +54,7 @@
                 android:layout_height="45sp"
                 app:cornerRadius="15sp"
                 android:textColor="@color/white"
-                android:text="150"
+                android:text="150 ₽"
                 android:textSize="18sp"
                 android:backgroundTint="@color/green"
                 />

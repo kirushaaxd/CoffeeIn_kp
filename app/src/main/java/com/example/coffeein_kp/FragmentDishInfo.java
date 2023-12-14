@@ -42,7 +42,7 @@ public class FragmentDishInfo extends BottomSheetDialogFragment {
         name.setText(product.getName());
         description.setText(product.getDescription());
         compose.setText(product.getCompound());
-        calories.setText(product.getCalories() + " ccal");
+        calories.setText(product.getCalories() + " кал.");
 
         return v;
     }
