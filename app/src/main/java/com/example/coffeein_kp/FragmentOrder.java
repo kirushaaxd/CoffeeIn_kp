@@ -28,6 +28,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.lang.reflect.Array;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -113,14 +114,15 @@ public class FragmentOrder extends Fragment {
         DocumentReference documentRef = collectionRef.document(StaticResources.selectedCoffeeHouse.getShopId());
         order.put("Адрес кофейни", documentRef);
 
-        if (LocalDateTime.now().getMinute() > 9)
-            order.put("Время заказа", LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute());
-        else
-            order.put("Время заказа", LocalDateTime.now().getHour() + ":0" + LocalDateTime.now().getMinute());
-        if (LocalDateTime.now().getMonthValue() > 9)
-            order.put("Дата заказа", LocalDateTime.now().getDayOfMonth() + "/" + LocalDateTime.now().getMonthValue() + "/" + LocalDateTime.now().getYear());
-        else
-            order.put("Дата заказа", LocalDateTime.now().getDayOfMonth() + "/0" + LocalDateTime.now().getMonthValue() + "/" + LocalDateTime.now().getYear());
+        LocalDateTime now = LocalDateTime.now();
+
+        DateTimeFormatter formatterDateFull = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
+        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+        order.put("Время заказа", now.format(formatterTime));
+        order.put("Дата заказа", now.format(formatterDate));
+        order.put("Полная дата заказа", now.format(formatterDateFull));
         order.put("Итоговая стоимость", Integer.parseInt(finalPrice.getText().toString()));
 
         List<Map<String, Object>> orderProducts = new ArrayList<>();

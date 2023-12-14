@@ -130,7 +130,7 @@ public class MainActivityApp extends AppCompatActivity {
     static public void LoadClientsOrdersInfo(){
         // Загрузка информации по каждому заказу авторизованного клиента
         StaticResources.fBase.collection("Заказы")
-                .orderBy("Дата заказа", Query.Direction.DESCENDING)
+                .orderBy("Полная дата заказа", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
