@@ -42,8 +42,7 @@ public class StaticResources {
     static CoffeeHouse selectedCoffeeHouse;
     static ClientOrders clientOrders;
     static DocumentReference clientOrdersDocumentReference;
-
-
+    
     // Работа с Firebase
     static FirebaseFirestore fBase;
     static FirebaseAuth mAuth;
